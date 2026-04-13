@@ -1,17 +1,6 @@
-# Route OpenAI provider through OpenRouter
-openai_base_url = "https://openrouter.ai/api/v1"
+# Route Codex through local proxy to OpenRouter (port 8009)
+# The proxy handles the WebSocket issue: accepts WS upgrade, then
+# immediately closes it so Codex falls back to HTTP with no retries.
+openai_base_url = "http://127.0.0.1:8009"
 
-# Default model
 model = "qwen/qwen3.6-plus"
-
-[projects."/Users/YOUR_USERNAME/.config/opencode"]
-trust_level = "trusted"
-
-[plugins."canva@openai-curated"]
-enabled = true
-
-[plugins."hugging-face@openai-curated"]
-enabled = true
-
-[plugins."github@openai-curated"]
-enabled = true
