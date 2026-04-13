@@ -1,0 +1,5 @@
+{
+  "auth_mode": "apikey",
+  "OPENAI_API_KEY": "YOUR_OPENROUTER_API_KEY_HERE",
+  "last_refresh": null
+}
