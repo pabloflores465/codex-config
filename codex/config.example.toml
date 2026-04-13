@@ -1,4 +1,4 @@
-# Route OpenAI provider through OpenRouter via openai_base_url
+# Route OpenAI provider through OpenRouter
 openai_base_url = "https://openrouter.ai/api/v1"
 
 # Default model
@@ -15,3 +15,6 @@ enabled = true
 
 [plugins."github@openai-curated"]
 enabled = true
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"

@@ -1,22 +1,29 @@
-# Codex CLI Config
+# Codex CLI Config — OpenRouter + Qwen
 
-Codex configuration routing through OpenRouter for third-party models (Qwen, Kimi, etc.).
+Codex configuration that bypasses ChatGPT account model restrictions by routing the built-in OpenAI provider through OpenRouter.
 
 ## Setup
 
-1. Copy config: `cp codex/config.example.toml ~/.codex/config.toml`
+1. `cp codex/config.example.toml ~/.codex/config.toml`
 2. Replace `YOUR_USERNAME` with your macOS username
-3. Set env var: `export OPENROUTER_API_KEY="sk-or-v1-..."`
-4. Add to `~/.zshrc`:
+3. `cp codex/auth.example.json ~/.codex/auth.json` and add your key
+4. `export OPENROUTER_API_KEY="sk-or-v1-..."`
+5. Add to `~/.zshrc`:
    ```bash
-   export RUST_LOG=codex_api::endpoint::responses_websocket=off,codex_api=warn
+   export RUST_LOG=codex=off,rmcp=off
    ```
-5. Run: `codex`
+6. Run: `codex`
 
 ## How it works
 
-`openai_base_url` redirects the built-in OpenAI provider to OpenRouter's endpoint. With `auth_mode: apikey` in `auth.json`, Codex bypasses the ChatGPT account model restrictions.
+| Setting | Purpose |
+|---------|---------|
+| `openai_base_url` | Routes the built-in `openai` provider to OpenRouter |
+| `auth_mode: apikey` | Uses API key auth instead of ChatGPT OAuth |
+| `OPENAI_API_KEY` | Your OpenRouter key (Codex treats it as an OpenAI key but sends it to OpenRouter) |
+| `model` | Any OpenRouter model works: `qwen/qwen3.6-plus`, `moonshotai/kimi-k2.5`, etc. |
+| `RUST_LOG=codex=off,rmcp=off` | Suppresses harmless WebSocket 404 noise |
 
 ## Notes
-- WebSocket 404 warnings are harmless (HTTP fallback works fine). `RUST_LOG` suppresses them.
+- WebSocket 404 errors are harmless — OpenRouter doesn't support WS, Codex falls back to HTTP
 - `auth.json` is **never committed** (it's in `.gitignore`)
