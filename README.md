@@ -1,17 +1,18 @@
-codex-config/
+# Codex CLI Config
 
-# Codex CLI configuration templates
+Codex configuration routing through OpenRouter for third-party models (Qwen, Kimi, etc.).
 
 ## Setup
-1. Copy the template: `cp codex/config.example.toml ~/.codex/config.toml`
-2. Set your API key: `export OPENROUTER_API_KEY="sk-or-v1-..."`
-3. Start Codex: `codex`
 
-## Files
-- **`codex/config.example.toml`** — Codex config routing through OpenRouter
-- **`codex/auth.example.json`** — Template for API key auth (requires manual key entry)
+1. Copy config: `cp codex/config.example.toml ~/.codex/config.toml`
+2. Replace `YOUR_USERNAME` with your macOS username
+3. Set env var: `export OPENROUTER_API_KEY="sk-or-v1-..."`
+4. Run: `codex`
+
+## How it works
+
+`openai_base_url` redirects the built-in OpenAI provider to OpenRouter's API endpoint. Combined with `auth_mode: apikey` in `auth.json`, Codex bypasses the ChatGPT account model restrictions.
 
 ## Notes
-- All secrets live in env vars (`OPENROUTER_API_KEY`), never in tracked files
-- `auth.json` stores the key only for TUI bootstrap; the env var should also be set
-- Default model: `qwen/qwen3.6-plus` via OpenRouter
+- **WebSocket 404 warnings on startup are harmless** — they resolve via HTTP fallback
+- `auth.json` is **never committed** (it's in `.gitignore`)

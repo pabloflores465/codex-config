@@ -1,18 +1,18 @@
-# Route the built-in OpenAI provider to OpenRouter to bypass
-# the ChatGPT account model restrictions. This works because
-# OpenRouter supports the OpenAI-compatible Responses API via
-# HTTP streaming (SSE).
+# Route OpenAI provider through OpenRouter via openai_base_url
 #
-# Note: The built-in OpenAI provider also attempts a WebSocket
-# connection (wss://openrouter.ai/api/v1/responses) which
-# OpenRouter returns 404 for. This is harmless — Codex logs the
-# error and falls back to HTTP SSE streaming.
+# Note: WebSocket 404 errors on startup are harmless. Codex tries
+# wss://openrouter.ai/api/v1/responses which OpenRouter doesn't support,
+# then falls back to HTTP SSE streaming. Everything still works.
+
 openai_base_url = "https://openrouter.ai/api/v1"
 
 # Default model
 model = "qwen/qwen3.6-plus"
 
 [projects."/Users/YOUR_USERNAME/.config/opencode"]
+trust_level = "trusted"
+
+[projects."/Users/YOUR_USERNAME/dotfiles"]
 trust_level = "trusted"
 
 [plugins."canva@openai-curated"]
